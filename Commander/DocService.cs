@@ -54,7 +54,7 @@ namespace Commander
 
             var doc = commandRef.MethodInfo.GetCustomAttribute<DocAttribute>();
             var parameters = commandRef.MethodInfo.GetCustomAttributes<DocArgAttribute>();
-            var opParameters = commandRef.MethodInfo.GetCustomAttributes<OpDocParamAttribute>();
+            var opParameters = commandRef.MethodInfo.GetCustomAttributes<OpDocArgAttribute>();
 
             if (doc != null)
             {
