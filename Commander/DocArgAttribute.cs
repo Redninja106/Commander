@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Commander
 {
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
     public sealed class DocArgAttribute : Attribute
     {
         public DocArgAttribute(string type, string name, string doc)
