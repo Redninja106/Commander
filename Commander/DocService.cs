@@ -87,7 +87,7 @@ namespace Commander
 
                 var doc = command.MethodInfo.GetCustomAttribute<DocAttribute>();
                 var parameters = command.MethodInfo.GetCustomAttributes<DocArgAttribute>();
-                var opParameters = command.MethodInfo.GetCustomAttributes<OpDocParamAttribute>();
+                var opParameters = command.MethodInfo.GetCustomAttributes<OpDocArgAttribute>();
 
                 TitleBar(command.Signature.ToString());
                 NewLine();
