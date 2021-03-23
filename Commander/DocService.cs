@@ -12,7 +12,7 @@ namespace Commander
 
         [Command("Commander")]
         [Doc("Prints the documentation of the passed command.")]
-        [DocParam("string", "command", "The name of the command to output the documentation of.")]
+        [DocArg("string", "command", "The name of the command to output the documentation of.")]
         public static void Doc(string command)
         {
             // parse the command string. It would be overkill to link into the existing command parsing system.
@@ -53,7 +53,7 @@ namespace Commander
             var commandRef = commands.First();
 
             var doc = commandRef.MethodInfo.GetCustomAttribute<DocAttribute>();
-            var parameters = commandRef.MethodInfo.GetCustomAttributes<DocParamAttribute>();
+            var parameters = commandRef.MethodInfo.GetCustomAttributes<DocArgAttribute>();
             var opParameters = commandRef.MethodInfo.GetCustomAttributes<OpDocParamAttribute>();
 
             if (doc != null)
@@ -86,7 +86,7 @@ namespace Commander
                 line = "";
 
                 var doc = command.MethodInfo.GetCustomAttribute<DocAttribute>();
-                var parameters = command.MethodInfo.GetCustomAttributes<DocParamAttribute>();
+                var parameters = command.MethodInfo.GetCustomAttributes<DocArgAttribute>();
                 var opParameters = command.MethodInfo.GetCustomAttributes<OpDocParamAttribute>();
 
                 TitleBar(command.Signature.ToString());

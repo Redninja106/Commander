@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Commander
 {
-    public sealed class OpDocParamAttribute : Attribute
+    public sealed class OpDocArgAttribute : Attribute
     {
-        public OpDocParamAttribute(string type, string name, string defaultValue, string doc)
+        public OpDocArgAttribute(string type, string name, string defaultValue, string doc)
         {
             Doc = doc;
             Type = type;

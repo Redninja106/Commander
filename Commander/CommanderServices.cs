@@ -11,8 +11,8 @@ namespace Commander
     {
         [Command("Commander")]
         [Doc("Prints the provided string a number of times.")]
-        [DocParam("string", "words", "The string to print.")]
-        [OpDocParam("int", "count", "1", "The number of times to print the string.")]
+        [DocArg("string", "words", "The string to print.")]
+        [OpDocArg("int", "count", "1", "The number of times to print the string.")]
         public static void Say(string words, int count = 1)
         {
             for (int i = 0; i < count; i++)
@@ -21,7 +21,7 @@ namespace Commander
 
         [Command("Commander")]
         [Doc("Calls Enviroment.Exit() with either the provided code or 0")]
-        [OpDocParam("int", "code", "0", "The exit code of the program.")]
+        [OpDocArg("int", "code", "0", "The exit code of the program.")]
         public static void Exit(int code = 0)
         {
             Environment.Exit(code);
