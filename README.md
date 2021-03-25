@@ -31,4 +31,4 @@ static void Main(string[] args)
 }
 ```
 
-You can find more information about Commander [here](https://github.com/Redninja106/Commander/wiki)
+You can find more information about Commander [here](https://github.com/Redninja106/Commander/wiki).
