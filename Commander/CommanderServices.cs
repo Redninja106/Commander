@@ -20,7 +20,7 @@ namespace Commander
         }
 
         [Command("Commander")]
-        [Doc("Calls Enviroment.Exit() with either the provided code or 0")]
+        [Doc("Calls Environment.Exit() with either the provided code or 0")]
         [OpDocArg("int", "code", "0", "The exit code of the program.")]
         public static void Exit(int code = 0)
         {

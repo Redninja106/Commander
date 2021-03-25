@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <Authors>Ryan Andersen</Authors>
+    <PackageProjectUrl>https://github.com/Redninja106/Commander</PackageProjectUrl>
+    <Description>Commander is a quick and easy command-running engine inspired by powershell.</Description>
   </PropertyGroup>
 
 </Project>
