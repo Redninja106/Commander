@@ -7,7 +7,7 @@ namespace Commander
 {
     public struct OutputStyle
     {
-        public static readonly OutputStyle Default = new OutputStyle(Color.Green, Color.White, Color.FromArgb(0, 0, 0, 0), Color.Yellow, Color.Red);
+        public static readonly OutputStyle Default = new OutputStyle(Color.Green, Color.White, Color.DarkGray, Color.Yellow, Color.Red);
 
         public OutputStyle(Color textColor, Color highlightColor, Color lowlightColor, Color warningColor, Color errorColor)
         {

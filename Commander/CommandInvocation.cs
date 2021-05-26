@@ -37,7 +37,7 @@ namespace Commander
 
         public override string ToString()
         {
-            return $"{Name}:{Service}";
+            return $"{Service}:{Name}";
         }
     }
 }

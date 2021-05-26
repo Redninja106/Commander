@@ -15,12 +15,31 @@ namespace Commander
         /// </summary>
         Color Color { get; set; }
 
-        void WriteLine();
-        void WriteLine(object obj);
-        void WriteLine(object obj, Color color);
-        void Write(object obj);
-        void Write(object obj, Color color);
-        string ReadLine();
+        void WriteLine() 
+        { 
+            Write("\n"); 
+        }
 
+        void WriteLine(object obj) 
+        { 
+            Write(obj.ToString() + "\n");
+        }
+
+        void WriteLine(object obj, Color color) 
+        {
+            var oldcolor = this.Color;
+            this.Color = color;
+            WriteLine(obj);
+            this.Color = oldcolor;
+        }
+
+        void Write(object obj);
+        void Write(object obj, Color color)
+        {
+            var oldcolor = this.Color;
+            this.Color = color;
+            Write(obj);
+            this.Color = oldcolor;
+        }
     }
 }

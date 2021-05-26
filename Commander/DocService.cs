@@ -15,6 +15,20 @@ namespace Commander
         [DocArg("string", "command", "The name of the command to output the documentation of.")]
         public static void Doc(string command)
         {
+            WriteDoc(Service.Output, command);
+        }
+
+        public static string GetDoc(string command)
+        {
+            IConsole c = new OutputStringConsole();
+
+            WriteDoc(c, command);
+
+            return c.ToString();
+        }
+
+        private static void WriteDoc(IConsole console, string command)
+        {
             // parse the command string. It would be overkill to link into the existing command parsing system.
             string serviceName = "";
             string commandName = "";
@@ -30,7 +44,7 @@ namespace Commander
                 commandName = command ?? "";
             }
 
-            var commands = Service.RegisteredCommands.FindAll(c => c.Signature.Name == command && serviceName == "" ? true : c.Signature.ServiceName == serviceName);
+            var commands = Service.RegisteredCommands.FindAll(c => c.Signature.Name == commandName.ToLower() && (serviceName == "" ? true : c.Signature.ServiceName == serviceName.ToLower()));
 
             if (commands.Count < 1)
             {
@@ -58,7 +72,7 @@ namespace Commander
 
             if (doc != null)
             {
-                DocFormat.Instance.Print(Service.Output, commandRef);
+                DocFormat.Instance.Print(console, commandRef);
             }
             else
             {
@@ -164,6 +178,13 @@ namespace Commander
                     NewLine();
                 }
 
+                if(opParameters.Count() + parameters.Count() == 0)
+                {
+                    Tab();
+                    Put("None.");
+                    NewLine();
+                }
+
                 NewLine();
 
                 SetColor(Service.Style.Lowlight);
@@ -196,7 +217,7 @@ namespace Commander
 
             private void Tab()
             {
-                Put('\t');
+                Put("     ");
                 positionOnLine += 5;
             }
 
@@ -280,6 +301,23 @@ namespace Commander
                 }
 
                 line += "+\n";
+            }
+        }
+
+        private class OutputStringConsole : IConsole
+        {
+            public Color Color { get; set; }
+
+            string result;
+
+            public void Write(object obj)
+            {
+                result += obj.ToString();
+            }
+
+            public override string ToString()
+            {
+                return result;
             }
         }
     }

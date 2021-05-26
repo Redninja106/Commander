@@ -23,7 +23,19 @@ namespace Commander
         /// Invocation builder to parse commands.
         /// </summary>
         internal static InvocationBuilder invocationBuilder = new InvocationBuilder();
-        
+
+        public static string[] GetRegisteredCommands()
+        {
+            string[] result = new string[RegisteredCommands.Count];
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = RegisteredCommands[i].ToString();
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// The return value of the most recently invoked command.
         /// </summary>
@@ -92,7 +104,14 @@ namespace Commander
 
             foreach (var invocation in invocations)
             {
-                InvokeCommand(invocation);
+                try
+                {
+                    InvokeCommand(invocation);
+                }
+                catch (Exception ex)
+                {
+                    Output.WriteLine(ex, Style.Error);
+                }
             }
         }
 

@@ -16,7 +16,7 @@ namespace Commander
         public static void Say(string words, int count = 1)
         {
             for (int i = 0; i < count; i++)
-                Console.WriteLine(words);
+                Service.Output.WriteLine(words);
         }
 
         [Command("Commander")]
@@ -39,7 +39,14 @@ namespace Commander
             {
                 o.Write(cmd.ToString() + " - ");
                 var doc = cmd.MethodInfo.GetCustomAttribute<DocAttribute>();
-                o.WriteLine(doc?.Doc, Service.Style.Text);
+                if (doc != null)
+                {
+                    o.WriteLine(doc.Doc, Service.Style.Text);
+                }
+                else
+                {
+                    o.WriteLine("No documentation", Service.Style.Text);
+                }
             }
         }
     }

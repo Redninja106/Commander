@@ -12,11 +12,6 @@ namespace Commander
 
         public Color Color { get => Color.FromName(Console.ForegroundColor.ToString()); set => Console.ForegroundColor = FromColor(value); }
 
-        public string ReadLine()
-        {
-            return Console.ReadLine();
-        }
-
         public void Write(object obj)
         {
             Console.Write(obj);
