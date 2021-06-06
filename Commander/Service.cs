@@ -24,6 +24,19 @@ namespace Commander
         /// </summary>
         internal static InvocationBuilder invocationBuilder = new InvocationBuilder();
 
+        public static string GetLastError()
+        {
+            return lastError;
+        }
+
+        private static string lastError;
+
+        internal static bool ReportError(string description)
+        {
+            lastError = description;
+            return false;
+        }
+
         public static string[] GetRegisteredCommands()
         {
             string[] result = new string[RegisteredCommands.Count];
@@ -81,14 +94,14 @@ namespace Commander
             }
         }
 
-        public static void RegisterMethod(MethodInfo info)
+        public static bool RegisterMethod(MethodInfo info)
         {
             var attr = info.GetCustomAttribute<CommandAttribute>();
 
             // make sure there is no command of this name registered.
             if (RegisteredCommands.Any(c => c.Signature.Name.ToLower() == info.Name.ToLower() && c.Signature.ServiceName.ToLower() == attr.serviceName.ToLower()))
             {
-                throw new Exception($"Command {info.Name.ToLower()} is already present in the service '{attr.serviceName.ToLower()}'");
+                return ReportError($"Command {info.Name.ToLower()} is already present in the service '{attr.serviceName.ToLower()}'");
             }
 
             // if the service name explicity defined, use that. Otherwise use the type name.
@@ -96,6 +109,8 @@ namespace Commander
 
             // command is valid and the type name is known. All good to register.
             RegisteredCommands.Add(new Command(info, serviceName));
+
+            return true;
         }
 
         public static void SubmitCommandString(string commandString)
@@ -119,7 +134,7 @@ namespace Commander
         /// Invokes a command using a command invocation.
         /// </summary>
         /// <param name="invocation">The command invocation to invoke the command with.</param>
-        public static void InvokeCommand(CommandInvocation invocation)
+        public static bool InvokeCommand(CommandInvocation invocation)
         {
             Command command;
             if (invocation.Service == "")
@@ -131,7 +146,7 @@ namespace Commander
                 // There are no cadidates
                 if (candidates.Count() < 1)
                 {
-                    throw new Exception($"Unrecognized command name: {invocation.Name}");
+                    return ReportError($"Unrecognized command name: {invocation.Name}");
                 }
 
                 // more then one command with the provided name. No way to tell which to call. Uh oh.
@@ -145,7 +160,7 @@ namespace Commander
                         exStr += "\n" + candidate.ToString();
                     }
 
-                    throw new Exception(exStr);
+                    return ReportError(exStr);
                 }
 
                 command = candidates.First();
@@ -156,17 +171,11 @@ namespace Commander
 
                 if (command == null)
                 {
-                    throw new Exception($"There is no registered command of name '{invocation}'!");
+                   return ReportError($"There is no registered command of name '{invocation}'!");
                 }
             }
-            try
-            {
-                lastResult = command.Invoke(lastResult, invocation.Parameters.ToArray());
-            }
-            catch (Exception ex)
-            {
-                Output.WriteLine(ex.InnerException?.Message ?? ex.Message, Style.Error);
-            }
+
+            return command.Invoke(lastResult, invocation.Parameters.ToArray(), out lastResult);
         }
         
         public static void SetOutputToSystemConsole()

@@ -27,7 +27,7 @@ namespace Commander.Documentation
             return c.ToString();
         }
 
-        private static void WriteDoc(IConsole console, string command)
+        private static bool WriteDoc(IConsole console, string command)
         {
             // parse the command string. It would be overkill to link into the existing command parsing system.
             string serviceName = "";
@@ -48,7 +48,7 @@ namespace Commander.Documentation
 
             if (commands.Count < 1)
             {
-                throw new Exception($"Unrecognized command: {command}");
+                return Service.ReportError($"Unrecognized command: {command}");
             }
 
             if (commands.Count > 1)
@@ -61,7 +61,7 @@ namespace Commander.Documentation
                     exStr += "\n" + cmd.ToString();
                 }
 
-                throw new Exception(exStr);
+                return Service.ReportError(exStr);
             }
 
             var commandRef = commands.First();
@@ -76,8 +76,10 @@ namespace Commander.Documentation
             }
             else
             {
-                throw new Exception("There is no documentation for this command");
+                return Service.ReportError("There is no documentation for this command");
             }
+
+            return true;
         }
 
         private class DocFormat

@@ -25,7 +25,10 @@ namespace Commander
             while (!reader.IsAtEnd)
             {
                 reader.Next();
-                HandleChar();
+                if(!HandleChar())
+                {
+                    return null;
+                }
             }
 
             if(!current.Equals(CommandInvocation.Default))
@@ -43,7 +46,7 @@ namespace Commander
             current = CommandInvocation.Default;
         }
 
-        void HandleChar()
+        bool HandleChar()
         {
             if (current.Name == null)
             {
@@ -67,17 +70,17 @@ namespace Commander
                     }
                     else
                     {
-                        throw new Exception();
+                        return Service.ReportError("");
                     }
                 }
                 else if (reader.Current == (char)0)
                 {
                     NewCommand();
-                    return;
+                    return true;
                 }
                 else
                 {
-                    throw new Exception();
+                    return Service.ReportError("");
                 }
             }
             else
@@ -97,6 +100,8 @@ namespace Commander
                     NewCommand();
                 }
             }
+
+            return true;
         }
 
         public static CommandSignature ParseSignature(string sig)
