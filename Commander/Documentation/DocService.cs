@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Commander
+namespace Commander.Documentation
 {
     public static class DocService
     {

@@ -1,4 +1,5 @@
 ﻿using Commander;
+using Commander.Documentation;
 using System;
 
 namespace AddExample

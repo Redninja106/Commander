@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocArgs", "DocArgs\DocArgs.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCommands", "MultiCommand\MultiCommands.csproj", "{6573230D-F64E-43BB-829B-B2286F3E2973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddExample", "AddExample\AddExample.csproj", "{D3DA2398-44C4-40C7-8732-55E8F3D4AF6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddExample", "AddExample\AddExample.csproj", "{D3DA2398-44C4-40C7-8732-55E8F3D4AF6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Commander
+namespace Commander.Documentation
 {
     /// <summary>
     /// Command documentation attribute for optional command arguments.

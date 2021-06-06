@@ -1,6 +1,7 @@
 ﻿using Commander;
 using System;
 using System.Drawing;
+using Commander.Documentation;
 
 namespace DocCommand
 {
