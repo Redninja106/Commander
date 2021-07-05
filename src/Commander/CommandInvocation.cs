@@ -1,43 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Commander
 {
-    public struct CommandInvocation : IEquatable<CommandInvocation>
+    /// <summary>
+    /// Represents a parsed command call. Is not garenteed to call a valid command in any <see cref="CommandContext"/>.
+    /// </summary>
+    internal sealed class CommandInvocation
     {
-        public static CommandInvocation Default => new CommandInvocation(null, null, new List<object>());
+        /// <summary>
+        /// The service of the command being invoked.
+        /// </summary>
+        public string Service { get; private set; }
 
-        public CommandInvocation(string name, string service, List<object> parameters)
+        /// <summary>
+        /// The name of the command being invoked.
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// The number of parameters on the command being invoked.
+        /// </summary>
+        public int ParameterCount => Parameters.Length;
+
+        /// <summary>
+        /// The provided parameters of the command being invoked.
+        /// </summary>
+        public string[] Parameters { get; private set; }
+
+        /// <summary>
+        /// Creates a new CommandInvocation.
+        /// </summary>
+        /// <param name="service">The service of the command being invoked.</param>
+        /// <param name="name">The name of the command being invoked.</param>
+        /// <param name="parameters">The provided parameters of the command being invoked.</param>
+        public CommandInvocation(string service, string name, string[] parameters)
         {
-            this.Name = name?.ToLower();
-            this.Service = service?.ToLower();
+            this.Service = service;
+            this.Name = name;
             this.Parameters = parameters;
-        }
-
-        public string Name { get; set; }
-        public string Service { get; set; }
-        public List<object> Parameters { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public bool Equals(CommandInvocation other)
-        {
-            return this.Name == other.Name && this.Service == other.Service && this.Parameters.SequenceEqual(other.Parameters);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Name, Service, Parameters);
-        }
-
-        public override string ToString()
-        {
-            return $"{Service}:{Name}";
         }
     }
 }
