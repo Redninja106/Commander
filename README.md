@@ -18,17 +18,20 @@ public static void MyCommand()
 
 ```
 
-## Calling a command
+## Calling your command
+All commands are called using a `CommandContext`, which represents enviroment for commands to be called and handles the parsing and execution of commands. 
 Commander uses a case *insenstive* syntax similar to that of the windows command prompt, with the command name and then the arguments separated by spaces 
 (Ex. `name arg0 arg1 arg2`). If there are no arguments then submitting just the name of the command invokes it.
 
-To call a command, use the `Service.SubmitCommandString()` method:
+To call a command, use the `CommandContext.SubmitCommand(string)` or `Command.TrySubmitCommand(string)` methods:
 
 ```C#
 static void Main(string[] args)
 {
-    Service.SubmitCommandString("MyCommand");
+    var context = new CommandContext();
+    context.SubmitCommand("print hi"); // outputs "hi" to the context's output
 }
 ```
+
 
 You can find more information about Commander [here](https://github.com/Redninja106/Commander/wiki).
