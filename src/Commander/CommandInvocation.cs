@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Commander
+﻿namespace Commander
 {
     /// <summary>
     /// Represents a parsed command call. Is not garenteed to call a valid command in any <see cref="CommandContext"/>.

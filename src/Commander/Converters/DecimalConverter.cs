@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Commander.Converters
+﻿namespace Commander.Converters
 {
     internal sealed class DecimalConverter : CommandArgumentConverter<decimal>
     {
