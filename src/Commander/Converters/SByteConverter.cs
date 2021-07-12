@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Commander.Converters
 {
-    internal sealed class SByteConverter : CommandArgumentTypeConverter<sbyte>
+    internal sealed class SByteConverter : CommandArgumentConverter<sbyte>
     {
         public override bool TryConvert(string value, out sbyte result)
         {

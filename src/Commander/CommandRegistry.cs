@@ -11,14 +11,21 @@ namespace Commander
     /// </summary>
     internal static class CommandRegistry
     {
+        /// <summary>
+        /// Every command registered to every context. Used to prevent duplicate commands.
+        /// </summary>
         public static Command[] AllCommands { get; private set; }
 
-        public static Dictionary<Type, CommandArgumentTypeConverter> ArgumentConverters { get; private set; }
+        /// <summary>
+        /// Every defined ArgumentConverter in the scanned namespaces.
+        /// </summary>
+        public static Dictionary<Type, CommandArgumentConverter> ArgumentConverters { get; private set; }
 
+        // scans all loaded non-system assemblies for type converters and commands.
         static CommandRegistry()
         {
             List<Command> cmds = new List<Command>();
-            var converters = new Dictionary<Type, CommandArgumentTypeConverter>();
+            var converters = new Dictionary<Type, CommandArgumentConverter>();
 
             foreach (var asm in GetAllNonSystemAssemblies())
             {
@@ -34,6 +41,11 @@ namespace Commander
             ArgumentConverters = converters;
         }
 
+        /// <summary>
+        /// Finds and returns all of the commands within an assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly to search for commands.</param>
+        /// <returns>An array of the commands defined in the assembly.</returns>
         public static Command[] GetCommands(Assembly assembly)
         {
             var commands = new List<Command>();
@@ -46,18 +58,23 @@ namespace Commander
             return commands.ToArray();
         }
 
-        public static CommandArgumentTypeConverter[] GetCommandArgumentConverters(Assembly assembly)
+        /// <summary>
+        /// Finds and the types that inherit <see cref="CommandArgumentConverter"/> within an assembly and returns an array with one instance of each.
+        /// </summary>
+        /// <param name="assembly">The assembly to search for converters.</param>
+        /// <returns>An array of the converters defined in the assembly.</returns>
+        public static CommandArgumentConverter[] GetCommandArgumentConverters(Assembly assembly)
         {
-            var converters = new List<CommandArgumentTypeConverter>();
+            var converters = new List<CommandArgumentConverter>();
 
             foreach (var type in assembly.GetTypes())
             {
-                if (type.IsSubclassOf(typeof(CommandArgumentTypeConverter)))
+                if (type.IsSubclassOf(typeof(CommandArgumentConverter)))
                 {
                     var ctor = type.GetConstructor(Array.Empty<Type>());
                     if (ctor != null)
                     {
-                        converters.Add((CommandArgumentTypeConverter)ctor.Invoke(Array.Empty<object>()));
+                        converters.Add((CommandArgumentConverter)ctor.Invoke(Array.Empty<object>()));
                     }
                 }
             }
@@ -65,6 +82,9 @@ namespace Commander
             return converters.ToArray();
         }
 
+        /// <summary>
+        /// Gets all loaded assemblies not in the "System" namespace.
+        /// </summary>
         public static Assembly[] GetAllNonSystemAssemblies()
         {
             return AppDomain.CurrentDomain.GetAssemblies().Where(asm => !asm.GetName().Name.StartsWith("System")).ToArray();

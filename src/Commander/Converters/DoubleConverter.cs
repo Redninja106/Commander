@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Commander.Converters
 {
-    internal sealed class DoubleConverter : CommandArgumentTypeConverter<double>
+    internal sealed class DoubleConverter : CommandArgumentConverter<double>
     {
         public override bool TryConvert(string value, out double result)
         {

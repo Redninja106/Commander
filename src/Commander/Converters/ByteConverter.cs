@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Commander.Converters
 {
-    internal sealed class ByteConverter : CommandArgumentTypeConverter<byte>
+    internal sealed class ByteConverter : CommandArgumentConverter<byte>
     {
         public override bool TryConvert(string value, out byte result)
         {

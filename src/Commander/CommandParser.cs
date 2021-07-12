@@ -10,6 +10,11 @@ namespace Commander
     /// </summary>
     internal class CommandParser
     {
+        /// <summary>
+        /// Gets a <see cref="CommandInvocation"/> from a string.
+        /// </summary>
+        /// <param name="commandString">The string to create the <see cref="CommandInvocation"/> from.</param>
+        /// <returns>The new <see cref="CommandInvocation"/>.</returns>
         public CommandInvocation GetInvocation(string commandString)
         {
             using var sr = new StringReader(commandString);

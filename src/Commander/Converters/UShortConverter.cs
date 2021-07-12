@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Commander.Converters
 {
-    internal sealed class UShortConverter : CommandArgumentTypeConverter<ushort>
+    internal sealed class UShortConverter : CommandArgumentConverter<ushort>
     {
         public override bool TryConvert(string value, out ushort result)
         {

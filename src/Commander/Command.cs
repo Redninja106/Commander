@@ -33,11 +33,11 @@ namespace Commander
         /// <summary>
         /// Reflection reference to the method which implements this command.
         /// </summary>
-        private readonly MethodInfo method;
+        public MethodInfo Method { get; }
 
         public Command(MethodInfo method)
         {
-            this.method = method;
+            this.Method = method;
             this.Name = method.Name;
             this.ParameterTypes = method.GetParameters().Select(param => param.ParameterType).ToArray();
 
@@ -68,15 +68,16 @@ namespace Commander
         /// <returns>The object returned by the command, or null if it the call fails.</returns>
         public bool TryInvoke(CommandInvocation invocation, out object result, out string errorDesc)
         {
-            
+            // create an array to hold the parameters after conversion
             object[] convertedParameters = new object[invocation.ParameterCount];
 
+            // try to convert each parameter
             for (int i = 0; i < invocation.ParameterCount; i++)
             {
                 var parameterType = this.ParameterTypes[i];
 
                 var converter = CommandRegistry.ArgumentConverters[parameterType];
-
+    
                 if (! converter.TryConvertToObject(invocation.Parameters[i], out convertedParameters[i]))
                 {
                     errorDesc = $"Unable to convert value '{invocation.Parameters[i]}' to type '{parameterType}'";
@@ -85,9 +86,10 @@ namespace Commander
                 }
             }
 
+            // try to call the command
             try 
             {
-                result = method.Invoke(null, convertedParameters);
+                result = Method.Invoke(null, convertedParameters);
                 errorDesc = null;
                 return true;
             }

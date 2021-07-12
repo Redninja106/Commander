@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Commander.Converters
 {
-    internal sealed class FloatConverter : CommandArgumentTypeConverter<float>
+    internal sealed class FloatConverter : CommandArgumentConverter<float>
     {
         public override bool TryConvert(string value, out float result)
         {
